@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <fileVersion>4</fileVersion>
+    <fileChecksum>4272475733</fileChecksum>
+    <configuration>
+        <name>X100MainBoard</name>
+        <outputs>
+            <file>$PROJ_DIR$\..\Src\i2c.c</file>
+            <file>$PROJ_DIR$\..\Src\gpio.c</file>
+            <file>$PROJ_DIR$\..\Src\main.c</file>
+            <file>$PROJ_DIR$\..\Src\stm32f1xx_hal_timebase_tim.c</file>
+            <file>$PROJ_DIR$\..\Src\tim.c</file>
+            <file>$PROJ_DIR$\..\Src\stm32f1xx_hal_msp.c</file>
+            <file>$PROJ_DIR$\..\Src\stm32f1xx_it.c</file>
+            <file>$PROJ_DIR$\..\Src\iwdg.c</file>
+            <file>$PROJ_DIR$\..\BSP\18B20.c</file>
+            <file>$PROJ_DIR$\..\Src\freertos.c</file>
+            <file>$PROJ_DIR$\..\Src\usart.c</file>
+            <file>$PROJ_DIR$\..\BSP\FlashEEPROM.c</file>
+            <file>$PROJ_DIR$\..\BSP\mpu6050.c</file>
+            <file>$PROJ_DIR$\..\BSP\oledfont.h</file>
+            <file>$PROJ_DIR$\..\BSP\WaterLevel.c</file>
+            <file>$PROJ_DIR$\..\BSP\KNOB.c</file>
+            <file>$PROJ_DIR$\..\BSP\mcp4541.c</file>
+            <file>$PROJ_DIR$\..\Src\dma.c</file>
+        </outputs>
+    </configuration>
+</project>

@@ -1,0 +1,15 @@
+"E:\IAR8.32\arm\bin\armproc.dll" 
+
+"E:\IAR8.32\arm\bin\armJET.dll" 
+
+"F:\X300MainBoardAPP\EWARM\X100MainBoard\Exe\X100MainBoard.out" 
+
+--plugin="E:\IAR8.32\arm\bin\armbat.dll" 
+
+--device_macro="E:\IAR8.32\arm\config\debugger\ST\STM32F1xx.dmac" 
+
+--flash_loader="E:\IAR8.32\arm\config\flashloader\ST\FlashSTM32F10xxC.board" 
+
+
+
+
