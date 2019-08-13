@@ -299,6 +299,8 @@ void FANStart(void)
 {
   FFSTART_EN_ENABLE();
   MFSTART_EN_ENABLE();
+  TIM4->CCR1=FlashRemember[0]*10;
+  TIM4->CCR3=FlashRemember[1]*10;
 }
 
 void FANStop(void)
@@ -472,11 +474,11 @@ void USART1_Sevice1(void)
       
       else if(ReceiveBuffer[4]==0x10&&ReceiveBuffer[5]==0x03)   //·çÉÈ¿ª¹Ø
       {
-           if(IRReceive[8]==0x01)
+           if(ReceiveBuffer[8]==0x01)
            {
               FANStart();
            }
-           if(IRReceive[8]==0x00)
+           if(ReceiveBuffer[8]==0x00)
            {
               FANStop();
            }

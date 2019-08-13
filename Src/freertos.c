@@ -185,10 +185,11 @@ void StartDefaultTask(void const * argument)
   {
     osDelay(100);
     HAL_GPIO_TogglePin(GPIOE,LED1_Pin);
-    osDelay(100);
-    HAL_GPIO_TogglePin(GPIOE,LED2_Pin);
-    osDelay(100);
-    HAL_GPIO_TogglePin(GPIOE,LED3_Pin);  }
+//    osDelay(100);
+//    HAL_GPIO_TogglePin(GPIOE,LED2_Pin);
+//    osDelay(100);
+//    HAL_GPIO_TogglePin(GPIOE,LED3_Pin); 
+  }
   /* USER CODE END StartDefaultTask */
 }
 

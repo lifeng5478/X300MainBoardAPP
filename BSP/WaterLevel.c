@@ -123,6 +123,7 @@ void WL_scan(void)
         WaterFlag=2;
         FlagAll=1;
         SendWL2ON();
+        HAL_GPIO_WritePin(GPIOE,LED2_Pin,GPIO_PIN_SET);
       }
     }
     
@@ -138,6 +139,7 @@ void WL_scan(void)
       ucWLLockIn2=1;
       WaterFlag=1;
       SendWL2OFF();
+      HAL_GPIO_WritePin(GPIOE,LED2_Pin,GPIO_PIN_RESET);
     }
   }
   
@@ -154,6 +156,8 @@ void WL_scan(void)
         ucWLLockOut1=1;
         WaterFlag1=2;
         SendWL1ON();
+        HAL_GPIO_WritePin(GPIOE,LED3_Pin,GPIO_PIN_SET);
+
       }
     }
     
@@ -169,6 +173,8 @@ void WL_scan(void)
       ucWLLockIn1=1;
       WaterFlag1=1;
       SendWL1OFF();
+      HAL_GPIO_WritePin(GPIOE,LED3_Pin,GPIO_PIN_RESET);
+
     }
   }
   
@@ -234,42 +240,83 @@ GPIO_PIN_SET ¹Ø
 GPIO_PIN_RESET ¿ª
 
 */
+//static uint16_t time1;
+//if(FlagAll == 1)
+//{
+//    if(WaterFlag1 == 1)
+//  {
+//    if(WaterFlag!=3)
+//    {
+//    PumpON
+//    time1++;
+//    if(time1>ShutDownTime)
+//    {
+//      time1=0;
+//      WaterFlag1=0;
+//      FlagAll = 0;
+//      PumpOFF
+//    }
+//    }
+//  }
+//  if (WaterFlag1 == 2)
+//  {
+//    time1 = 0;
+//  }
+//  
+//    if(WaterFlag == 2||WaterFlag==3)
+//  {
+//    PumpOFF
+//    WaterFlag=0;
+//  }
+//
+//}
+  
+
 static uint16_t time1;
-if(FlagAll == 1)
-{
-    if(WaterFlag1 == 1)
+static uint16_t time2;
+static uint16_t time3;
+static uint8_t flagPump;
+
+  if (FlagAll==1)
   {
-    if(WaterFlag!=3)
+    if(WaterFlag == 1)
     {
-    PumpON
-    time1++;
-    if(time1>ShutDownTime)
+      time1++;
+      if(time1>1000)
+      {
+        time1=0;
+        time2++;
+      }
+      if(time2>120)
+      {
+        time2=0;
+        PumpON
+        WaterFlag = 0;
+      }
+    }
+
+    if(WaterFlag==2|WaterFlag==3)
     {
       time1=0;
-      WaterFlag1=0;
-      FlagAll = 0;
+      time2=0;
       PumpOFF
+      WaterFlag=0;
     }
+    
+    if(WaterFlag1 == 1)
+    {
+      FlagAll=0;
+      WaterFlag1 = 0;
     }
-  }
-  if (WaterFlag1 == 2)
-  {
-    time1 = 0;
   }
   
-    if(WaterFlag == 2||WaterFlag==3)
-  {
-    PumpOFF
-    WaterFlag=0;
-  }
-
-}
+  
 
 if (FlagAll == 0)
 {
   WaterFlag=0;
   WaterFlag1=0;
-      MachineSTOP();
+  MachineSTOP();
 }
   
   
