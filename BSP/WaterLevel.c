@@ -7,7 +7,7 @@
 #define  GetWL2_H  HAL_GPIO_ReadPin(WaterLevel2_GPIO_Port,WaterLevel2_Pin)==1
 #define  GetWL2_L  HAL_GPIO_ReadPin(WaterLevel2_GPIO_Port,WaterLevel2_Pin)==0
 
-#define const_WL_time 200
+#define const_WL_time 500
 #define ShutDownTime 5000
 
 unsigned char ucWLSec=0;   //°´¼üÑ¡Ôñ
@@ -295,7 +295,7 @@ static uint8_t flagPump;
       }
     }
 
-    if(WaterFlag==2|WaterFlag==3)
+    if(WaterFlag==2)
     {
       time1=0;
       time2=0;
