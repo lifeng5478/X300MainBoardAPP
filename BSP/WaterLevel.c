@@ -35,9 +35,13 @@ uint8_t ucWLLockOut2=0;
 uint16_t uiWLTimeCntOut2=0;
 uint16_t uiWLTimeCntIn2=0;
 
-uint8_t WaterFlag;
-uint8_t WaterFlag1;
-uint8_t FlagAll;
+uint8_t WaterFlag = 1;
+uint8_t WaterFlag1 = 1;
+uint8_t PumpFlag = 0;
+uint8_t PumpFlag1 = 0;
+extern uint8_t STFlag; 
+
+uint8_t FlagAll = 0;
 
 
 void WL_Init(void)
@@ -274,13 +278,51 @@ GPIO_PIN_RESET ¿ª
 
 static uint16_t time1;
 static uint16_t time2;
-
+static uint16_t time3;
+if(STFlag == 0)
+{
   if (FlagAll==1)
   {
+//    if(WaterFlag == 1)
+//    {
+//      time1++;
+//      if(time1>1000)
+//      {
+//        time1=0;
+//        time2++;
+//      }
+//      if(time2>120)
+//      {
+//        time2=0;
+//        PumpON
+//        WaterFlag = 0;
+//      }
+//    }
+//
+//    if(WaterFlag==2)
+//    {
+//      time1=0;
+//      time2=0;
+//      PumpOFF
+//      WaterFlag=0;
+//    }
+//    
+//    if(WaterFlag1 == 1)
+//    {
+//      FlagAll=0;
+//      WaterFlag1 = 0;
+//    }
+
+    if(PumpFlag1 == 1)
+    {
+      PumpFlag1 =0;
+      PumpOFF;
+    }
+    
     if(WaterFlag == 1)
     {
       time1++;
-      if(time1>1000)
+      if(time1>=1000)
       {
         time1=0;
         time2++;
@@ -288,33 +330,31 @@ static uint16_t time2;
       if(time2>120)
       {
         time2=0;
-        PumpON
+        PumpON;
+        PumpFlag =1;
         WaterFlag = 0;
       }
     }
-
-    if(WaterFlag==2)
+    if(PumpFlag ==1)
     {
-      time1=0;
-      time2=0;
-      PumpOFF
-      WaterFlag=0;
-    }
-    
-    if(WaterFlag1 == 1)
-    {
-      FlagAll=0;
-      WaterFlag1 = 0;
+      time3++;
+      if(time3>5000)
+      {
+        time3 = 0;
+        PumpFlag=0;
+        PumpOFF;
+      }
     }
   }
   
-  
+
 
 if (FlagAll == 0)
 {
-  WaterFlag=0;
-  WaterFlag1=0;
+  WaterFlag=1;
+  WaterFlag1=1;
   MachineSTOP();
+}
 }
   
   

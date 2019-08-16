@@ -86,6 +86,8 @@ Flash分布：FlashRemember[0]为CCR1即风扇1的值
 uint8_t SpeedToSend[9]={0x5A,0xA5,0x06,0x82,0x10,0x09,0x00,0x10,0x00};
 uint8_t RxEndFlag=0;
 uint8_t RxLen=0;
+extern uint8_t PumpFlag1 ;
+uint8_t STFlag =0;
 extern osMessageQId usartQueue01Handle;
 /* USER CODE END PD */
 
@@ -273,16 +275,19 @@ void MachineSTOP(void)
   MFSTART_EN_DISABLE();
   FFSTART_EN_DISABLE();
   HAL_GPIO_WritePin(GPIOD,JDQ3_Pin|JDQ2_Pin|JDQ1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOD,JDQ4_Pin,GPIO_PIN_SET);
 }
 
 void PUMPStart(void)
 {
   HAL_GPIO_WritePin(GPIOD, JDQ4_Pin, GPIO_PIN_RESET);
+  PumpFlag1 = 1;
 }
 
 void PUMPStop(void)
 {
   HAL_GPIO_WritePin(GPIOD, JDQ4_Pin, GPIO_PIN_SET);
+  PumpFlag1 = 0;
 }
 
 void WHPStart(void)
@@ -464,11 +469,12 @@ void USART1_Sevice1(void)
     {
       if(ReceiveBuffer[4]==0x10&&ReceiveBuffer[5]==0x01)                //设备总开关
       {
-           MachineSTART();
+           STFlag = 0;
       }
       else if(ReceiveBuffer[4]==0x10&&ReceiveBuffer[5]==0x02)
       {
            MachineSTOP();
+           STFlag = 1;
       }
       
       else if(ReceiveBuffer[4]==0x10&&ReceiveBuffer[5]==0x03)   //风扇开关
@@ -499,11 +505,17 @@ void USART1_Sevice1(void)
       {
            if(ReceiveBuffer[8]==0x01)
            {
-            PumpON
+            PUMPStart();
            }
            if(ReceiveBuffer[8]==0x00)
            {
-            PumpOFF
+            PUMPStop();
+            STFlag = 0;
+           }
+           if(ReceiveBuffer[8]==0x02)
+           {
+            STFlag = 1;
+            PumpON
            }
       }
       else if(ReceiveBuffer[4]==0x11&&ReceiveBuffer[5]==0x01)   //FF的功率
@@ -535,6 +547,7 @@ void USART1_Sevice1(void)
       {
         WHPInit();
       }
+ 
     }
   RxEndFlag = 0;
   }
