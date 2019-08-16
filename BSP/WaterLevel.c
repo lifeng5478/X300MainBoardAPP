@@ -92,10 +92,10 @@ void WL_scan(void)
 //     }
 //  }
 //
-//  if(GetWL2_H)																
+//  if(GetWL2_H)
 //  {
 //        ucWLLock2=0; 
-//        uiWLTimeCnt2=0;														
+//        uiWLTimeCnt2=0;
 //  }
 //  else if(ucWLLock2==0)
 //  {
@@ -274,8 +274,6 @@ GPIO_PIN_RESET ¿ª
 
 static uint16_t time1;
 static uint16_t time2;
-static uint16_t time3;
-static uint8_t flagPump;
 
   if (FlagAll==1)
   {

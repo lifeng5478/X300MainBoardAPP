@@ -287,12 +287,11 @@ void PUMPStop(void)
 
 void WHPStart(void)
 {
-  HAL_GPIO_WritePin(GPIOD,JDQ3_Pin, GPIO_PIN_RESET);
-}
+ HAL_GPIO_WritePin(GPIOD,JDQ3_Pin|JDQ2_Pin|JDQ1_Pin, GPIO_PIN_RESET);}
 
 void WHPStop(void)
 {
-  HAL_GPIO_WritePin(GPIOD,JDQ3_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOD,JDQ3_Pin|JDQ2_Pin|JDQ1_Pin, GPIO_PIN_SET);
 }
 
 void FANStart(void)

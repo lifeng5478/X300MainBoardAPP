@@ -324,11 +324,8 @@ void ReadMPU6050(void const * argument)
 //   printf("开始接收USART数据信号！\n"); 
   /* Infinite loop */
   for(;;)
-  {  
-
+  {
     osDelay(10);
-  
-
   //  HAL_UART_Transmit(&huart1,"aa",2,0x0f);
   }
   /* USER CODE END ReadMPU6050 */
