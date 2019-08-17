@@ -87,7 +87,7 @@ uint8_t SpeedToSend[9]={0x5A,0xA5,0x06,0x82,0x10,0x09,0x00,0x10,0x00};
 uint8_t RxEndFlag=0;
 uint8_t RxLen=0;
 extern uint8_t PumpFlag1 ;
-uint8_t STFlag =0;
+uint8_t STFlag = 0;
 extern osMessageQId usartQueue01Handle;
 /* USER CODE END PD */
 
@@ -226,6 +226,14 @@ void InitAllPeriph(void)
    HAL_GPIO_WritePin(TemperC_GPIO_Port, TemperC_Pin, GPIO_PIN_RESET);
   DS18B20_Init();
   WL_Init();
+  if(HAL_GPIO_ReadPin(WaterLevel2_GPIO_Port,WaterLevel2_Pin)==0)
+  {
+    FlagAll = 0;
+  }
+  else
+  {
+    FlagAll = 1;
+  }
   if (HAL_TIM_Base_Start_IT(&htim1) != HAL_OK)
   {
     /* Starting Error */
@@ -275,7 +283,8 @@ void MachineSTOP(void)
   MFSTART_EN_DISABLE();
   FFSTART_EN_DISABLE();
   HAL_GPIO_WritePin(GPIOD,JDQ3_Pin|JDQ2_Pin|JDQ1_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOD,JDQ4_Pin,GPIO_PIN_SET);
+ // HAL_GPIO_WritePin(GPIOD,JDQ4_Pin,GPIO_PIN_SET);
+ // PUMPStop();
 }
 
 void PUMPStart(void)
@@ -458,7 +467,7 @@ void WHPInit(void)
 //      HAL_UART_Receive_IT(&huart1,IRReceive,sizeof(IRReceive));
 //  }
 // }
-
+uint8_t everyFlag = 0;
 
 void USART1_Sevice1(void)
 {
@@ -469,15 +478,19 @@ void USART1_Sevice1(void)
     {
       if(ReceiveBuffer[4]==0x10&&ReceiveBuffer[5]==0x01)                //设备总开关
       {
+           everyFlag = 1;
            STFlag = 0;
+           
       }
       else if(ReceiveBuffer[4]==0x10&&ReceiveBuffer[5]==0x02)
       {
+           everyFlag = 0;
            MachineSTOP();
-           STFlag = 1;
+           PUMPStop();
       }
-      
-      else if(ReceiveBuffer[4]==0x10&&ReceiveBuffer[5]==0x03)   //风扇开关
+      if(everyFlag == 1)
+      {
+      if(ReceiveBuffer[4]==0x10&&ReceiveBuffer[5]==0x03)   //风扇开关
       {
            if(ReceiveBuffer[8]==0x01)
            {
@@ -547,7 +560,7 @@ void USART1_Sevice1(void)
       {
         WHPInit();
       }
- 
+      }
     }
   RxEndFlag = 0;
   }

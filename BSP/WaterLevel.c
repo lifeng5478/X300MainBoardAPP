@@ -114,7 +114,7 @@ void WL_scan(void)
   
   if(GetWL2_H)				//Ë«Ïò¿¹¶¶³ÌÐò
   {
-    WaterFlag=3;
+//    WaterFlag=3;
     ucWLLockIn2=0;
     uiWLTimeCntIn2=0;
     if (ucWLLockOut2==0)
@@ -315,8 +315,9 @@ if(STFlag == 0)
 
     if(PumpFlag1 == 1)
     {
-      PumpFlag1 =0;
       PumpOFF;
+      PumpFlag1 =0;
+
     }
     
     if(WaterFlag == 1)
@@ -332,7 +333,7 @@ if(STFlag == 0)
         time2=0;
         PumpON;
         PumpFlag =1;
-        WaterFlag = 0;
+        //WaterFlag = 0;
       }
     }
     if(PumpFlag ==1)
@@ -341,18 +342,21 @@ if(STFlag == 0)
       if(time3>5000)
       {
         time3 = 0;
+        time2 = 0;
         PumpFlag=0;
         PumpOFF;
       }
     }
   }
   
-
+  if(WaterFlag1 == 1)
+  {
+    FlagAll=0;
+    //  WaterFlag1 = 0;
+  }
 
 if (FlagAll == 0)
 {
-  WaterFlag=1;
-  WaterFlag1=1;
   MachineSTOP();
 }
 }
