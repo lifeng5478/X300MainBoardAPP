@@ -47,12 +47,12 @@ uint8_t FlagAll = 0;
 void WL_Init(void)
 {
 	  GPIO_InitTypeDef GPIO_InitStruct;
-	   __HAL_RCC_GPIOB_CLK_ENABLE();
-  /*Configure GPIO pins : PA12 PA15 */
+	   __HAL_RCC_GPIOC_CLK_ENABLE();
+  /*Configure GPIO pins : PC4 PC5 */
   GPIO_InitStruct.Pin = WaterLevel1_Pin|WaterLevel2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 }
 
 void SendWL1ON(void)
@@ -127,7 +127,7 @@ void WL_scan(void)
         WaterFlag=2;
         FlagAll=1;
         SendWL2ON();
-        HAL_GPIO_WritePin(GPIOE,LED2_Pin,GPIO_PIN_SET);
+       HAL_GPIO_WritePin(GPIOE,LED2_Pin,GPIO_PIN_SET);
       }
     }
     
@@ -143,7 +143,7 @@ void WL_scan(void)
       ucWLLockIn2=1;
       WaterFlag=1;
       SendWL2OFF();
-      HAL_GPIO_WritePin(GPIOE,LED2_Pin,GPIO_PIN_RESET);
+     HAL_GPIO_WritePin(GPIOE,LED2_Pin,GPIO_PIN_RESET);
     }
   }
   
@@ -160,7 +160,7 @@ void WL_scan(void)
         ucWLLockOut1=1;
         WaterFlag1=2;
         SendWL1ON();
-        HAL_GPIO_WritePin(GPIOE,LED3_Pin,GPIO_PIN_SET);
+       HAL_GPIO_WritePin(GPIOE,LED3_Pin,GPIO_PIN_SET);
 
       }
     }
@@ -177,8 +177,8 @@ void WL_scan(void)
       ucWLLockIn1=1;
       WaterFlag1=1;
       SendWL1OFF();
-      HAL_GPIO_WritePin(GPIOE,LED3_Pin,GPIO_PIN_RESET);
-
+    HAL_GPIO_WritePin(GPIOE,LED3_Pin,GPIO_PIN_RESET);
+//
     }
   }
   
@@ -339,7 +339,7 @@ if(STFlag == 0)
     if(PumpFlag ==1)
     {
       time3++;
-      if(time3>5000)
+      if(time3>10000)
       {
         time3 = 0;
         time2 = 0;

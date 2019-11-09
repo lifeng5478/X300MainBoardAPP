@@ -21,8 +21,14 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
+uint8_t SendLock = 0;
+uint8_t CntSend = 0;
+uint8_t SendUpdate = 0;
+uint8_t RxMFlag = 0;
 
-/* USER CODE END 0 */
+uint8_t ReceiveBuffer2[20]={0};
+uint8_t bufcount = 0;
+/* USER CODE END 0 */ 
 
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
@@ -218,6 +224,97 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 //    return ch;
 //}
 
+
+HAL_StatusTypeDef Serial_PutByte(UART_HandleTypeDef *huart,uint8_t param )
+{
+	huart->Instance->DR = param;
+	while(__HAL_UART_GET_FLAG(huart,UART_FLAG_TC)==RESET);
+        return HAL_OK;
+}
+
+void Serial_PutString(UART_HandleTypeDef *huart,uint8_t *p_string,uint8_t len)
+{
+	uint8_t i;
+		for (i = 0;i<len;i++)
+		Serial_PutByte(huart,p_string[i]);
+}
+
+
+void TimUart(void)
+{
+  if (SendUpdate==1)                              //数据接收时锁死！
+  {
+    //HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin,GPIO_PIN_RESET);
+    SendLock = 1;
+    ++CntSend;
+    if(CntSend>= 20)                              //超过20ms没有数据进来进入处理数据环节
+    {
+      //      HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin,GPIO_PIN_SET);
+      CntSend = 0;
+      SendUpdate = 0;
+    }
+  }
+  
+  else if (SendLock == 1)                       //锁死数据，准备处理数据
+  {
+    bufcount = 0;
+    SendLock = 0;
+    RxMFlag = 1;
+  }
+}
+
+double tempHXtemp = 0;
+double tempFYtemp = 0;
+double tempHGtemp = 0;
+void usart2_sevice(void)
+{
+  double tempHX = 0;
+  double tempFY = 0;
+  double tempHG = 0;
+  if(RxMFlag == 1)
+  {
+    //Serial_PutString(&huart2,ReceiveBuffer2,sizeof(ReceiveBuffer2));
+    RxMFlag = 0;
+    if(ReceiveBuffer2[0]==0XAA&&ReceiveBuffer2[7]==0x55)
+    {
+
+      tempHX = (double)(ReceiveBuffer2[1]<<8|ReceiveBuffer2[2]) / 100.0;
+      if(tempHX>180)
+      {
+        tempHX = -(655.36-tempHX);
+      }
+      if((tempHX-tempHXtemp>1)||(tempHXtemp-tempHX>1))
+      {
+        printf("航向角：%f\r\n",tempHX);
+        tempHXtemp = tempHX;
+      }
+      tempFY = (double)(ReceiveBuffer2[3]<<8|ReceiveBuffer2[4]) / 100.0;
+      if(tempFY>180)
+      {
+        tempFY = -(655.36-tempFY);
+      }
+      if((tempFY-tempFYtemp>1)||(tempFYtemp-tempFY>1))
+      {
+        printf("俯仰角：%f\r\n",tempFY);
+        tempFYtemp = tempFY;
+      }
+      tempHG = (double)(ReceiveBuffer2[5]<<8|ReceiveBuffer2[6]) / 100.0;
+      if(tempHG>180)
+      {
+        tempHG = -(655.36-tempHG);
+      }
+      if((tempHG-tempHGtemp>1)||(tempHGtemp-tempHG>1))
+      {
+        printf("横滚角：%f\r\n",tempHG);
+        tempHGtemp = tempHG;
+      }
+
+    }
+    memset (ReceiveBuffer2,0,sizeof(ReceiveBuffer2));
+    bufcount = 0;
+  }
+}
+
 #ifdef __GNUC__
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 #else
@@ -226,7 +323,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 PUTCHAR_PROTOTYPE
 {
     //具体哪个串口可以更改huart1为其它串口
-    HAL_UART_Transmit(&huart1 , (uint8_t *)&ch, 1 , 0xffff);
+    HAL_UART_Transmit(&huart2 , (uint8_t *)&ch, 1 , 0xffff);
     return ch;
 }
 

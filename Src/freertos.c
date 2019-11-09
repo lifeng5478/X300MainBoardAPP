@@ -62,6 +62,7 @@
 #include "usart.h"
 #include "mpu6050.h"
 #include "mcp4541.h"
+#include "gy25.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -185,7 +186,7 @@ void StartDefaultTask(void const * argument)
   {
     osDelay(100);
     HAL_GPIO_TogglePin(GPIOE,LED1_Pin);
-//    osDelay(100);
+    osDelay(100);
 //    HAL_GPIO_TogglePin(GPIOE,LED2_Pin);
 //    osDelay(100);
 //    HAL_GPIO_TogglePin(GPIOE,LED3_Pin); 
@@ -247,6 +248,7 @@ void WatchDogRST(void const * argument)
 * @retval None
 */
 /* USER CODE END Header_ReadTemper */
+#include "i2c.h"
 void ReadTemper(void const * argument)
 {
   /* USER CODE BEGIN ReadTemper */
@@ -285,7 +287,11 @@ void ReadTemper(void const * argument)
 //      MPU6050_ReturnTemp(&Temp);
 //      printf("温度： %d",Temp);
    //   osDelay(200);
-    MCP4541Sevice();
+   MCP4541Sevice();
+
+ //           osDelay(1);
+
+
     osDelay(200);
   }
   /* USER CODE END ReadTemper */
@@ -301,6 +307,8 @@ void ReadTemper(void const * argument)
 void MenuFunc(void const * argument)
 {
   /* USER CODE BEGIN MenuFunc */
+  osDelay(1000);
+  
   /* Infinite loop */
   for(;;)
   {
@@ -319,14 +327,24 @@ void MenuFunc(void const * argument)
 /* USER CODE END Header_ReadMPU6050 */
 void ReadMPU6050(void const * argument)
 {
+  static uint16_t timeer1 = 0;
   /* USER CODE BEGIN ReadMPU6050 */
   //HAL_UART_Receive_IT(&huart1,IRReceive,9);
 //   printf("开始接收USART数据信号！\n"); 
   /* Infinite loop */
+  __HAL_UART_ENABLE_IT(&huart2,UART_IT_RXNE);	
   for(;;)
   {
-    osDelay(10);
-  //  HAL_UART_Transmit(&huart1,"aa",2,0x0f);
+
+    timeer1++;
+    if(timeer1>=50)
+    {
+      timeer1=0;
+      //Serial_PutByte(&huart2,0x01);
+    // GY25_inquiries();
+    }
+    usart2_sevice();
+    osDelay(1);
   }
   /* USER CODE END ReadMPU6050 */
 }

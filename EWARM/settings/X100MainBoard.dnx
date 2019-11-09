@@ -20,7 +20,7 @@
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
     </StLinkDriver>
     <DebugChecksum>
-        <Checksum>1895884112</Checksum>
+        <Checksum>1932741778</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -59,6 +59,7 @@
     <Jet>
         <JetConnSerialNo>Fire CMSIS-DAP:FS-00000506</JetConnSerialNo>
         <JetConnFoundProbes />
+        <PrevWtdReset>Hardware</PrevWtdReset>
         <OnlineReset>Software</OnlineReset>
         <DisableInterrupts>0</DisableInterrupts>
         <LeaveRunning>0</LeaveRunning>
@@ -71,6 +72,37 @@
     <ArmDriver>
         <EnableCache>1</EnableCache>
     </ArmDriver>
+    <SWOManager>
+        <SamplingDivider>8192</SamplingDivider>
+        <OverrideClock>0</OverrideClock>
+        <CpuClock>696008061</CpuClock>
+        <SwoClock>560889384</SwoClock>
+        <DataLogMode>0</DataLogMode>
+        <ItmPortsEnabled>63</ItmPortsEnabled>
+        <ItmTermIOPorts>1</ItmTermIOPorts>
+        <ItmLogPorts>0</ItmLogPorts>
+        <ItmLogFile>$PROJ_DIR$\ITM.log</ItmLogFile>
+        <PowerForcePC>1</PowerForcePC>
+        <PowerConnectPC>1</PowerConnectPC>
+    </SWOManager>
+    <JLinkDriver>
+        <CStepIntDis>_ 0</CStepIntDis>
+        <LeaveTargetRunning>_ 0</LeaveTargetRunning>
+    </JLinkDriver>
+    <PowerLog>
+        <Title_0>I0</Title_0>
+        <Symbol_0>0 4 0</Symbol_0>
+        <LogEnabled>0</LogEnabled>
+        <GraphEnabled>0</GraphEnabled>
+        <ShowTimeLog>1</ShowTimeLog>
+        <LiveEnabled>0</LiveEnabled>
+        <LiveFile>PowerLogLive.log</LiveFile>
+    </PowerLog>
+    <PowerProbe>
+        <Frequency>10000</Frequency>
+        <Probe0>I0</Probe0>
+        <ProbeSetup0>2 1 1 2 0 0</ProbeSetup0>
+    </PowerProbe>
     <Trace1>
         <Enabled>0</Enabled>
         <ShowSource>1</ShowSource>
@@ -87,19 +119,6 @@
         <StallCPU>0</StallCPU>
         <NoPCCapture>0</NoPCCapture>
     </ETMTraceWindow>
-    <SWOManager>
-        <SamplingDivider>8192</SamplingDivider>
-        <OverrideClock>0</OverrideClock>
-        <CpuClock>696008061</CpuClock>
-        <SwoClock>560889384</SwoClock>
-        <DataLogMode>0</DataLogMode>
-        <ItmPortsEnabled>63</ItmPortsEnabled>
-        <ItmTermIOPorts>1</ItmTermIOPorts>
-        <ItmLogPorts>0</ItmLogPorts>
-        <ItmLogFile>$PROJ_DIR$\ITM.log</ItmLogFile>
-        <PowerForcePC>1</PowerForcePC>
-        <PowerConnectPC>1</PowerConnectPC>
-    </SWOManager>
     <Trace2>
         <Enabled>0</Enabled>
         <ShowSource>0</ShowSource>

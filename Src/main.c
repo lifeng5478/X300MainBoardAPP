@@ -72,7 +72,8 @@
 
 uint8_t ReceiveBuffer[BUFFERSIZE] = {0};
 
-uint8_t IRReceive[9]={0};
+
+//uint8_t IRReceive[9]={0};
 
 uint8_t FlashRemember[10];
 /*
@@ -147,15 +148,15 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_USART1_UART_Init();
+  //MX_USART2_UART_Init();
   MX_TIM1_Init();
   MX_I2C1_Init();
   MX_TIM4_Init();
-  MX_IWDG_Init();
-//  MX_USART2_UART_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  HAL_Delay(100);
+  HAL_Delay(1000);
   InitAllPeriph();
+  MX_IWDG_Init();
 
   /* USER CODE END 2 */
 
@@ -172,7 +173,10 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+//  I2C_SDA_HIGH();
+//  I2C_Delay();
+//  I2C_SDA_LOW();
+//  I2C_Delay();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -223,6 +227,8 @@ void SystemClock_Config(void)
 void InitAllPeriph(void)
 {
 //  uint8_t i;
+    MX_USART1_UART_Init();
+
    HAL_GPIO_WritePin(TemperC_GPIO_Port, TemperC_Pin, GPIO_PIN_RESET);
   DS18B20_Init();
   WL_Init();
@@ -256,7 +262,7 @@ void InitAllPeriph(void)
 //    printf("FlashÔ¤´æ%d£º%d\n",i,FlashRemember[i]);
 //  }
   
-  HAL_UART_Transmit(&huart1 , SpeedToSend, 9 , 0xffff);
+//  HAL_UART_Transmit(&huart1 , SpeedToSend, 9 , 0xffff);
   __HAL_UART_ENABLE_IT(&huart1,UART_IT_IDLE);
  // HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_4);
         
@@ -272,7 +278,7 @@ void MachineSTART(void)
   //    SendMashineComond(StopK);
   FFSTART_EN_ENABLE();
   MFSTART_EN_ENABLE();
-  HAL_GPIO_WritePin(GPIOD,JDQ3_Pin|JDQ2_Pin|JDQ1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOE,JDQ3_Pin|JDQ2_Pin|JDQ1_Pin, GPIO_PIN_RESET);
   
   TIM4->CCR1=FlashRemember[0]*10;
   TIM4->CCR3=FlashRemember[1]*10;
@@ -282,30 +288,30 @@ void MachineSTOP(void)
 {
   MFSTART_EN_DISABLE();
   FFSTART_EN_DISABLE();
-  HAL_GPIO_WritePin(GPIOD,JDQ3_Pin|JDQ2_Pin|JDQ1_Pin, GPIO_PIN_SET);
- // HAL_GPIO_WritePin(GPIOD,JDQ4_Pin,GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOE,JDQ3_Pin|JDQ2_Pin|JDQ1_Pin, GPIO_PIN_SET);
+ // HAL_GPIO_WritePin(GPIOE,JDQ4_Pin,GPIO_PIN_SET);
  // PUMPStop();
 }
 
 void PUMPStart(void)
 {
-  HAL_GPIO_WritePin(GPIOD, JDQ4_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOE, JDQ4_Pin, GPIO_PIN_RESET);
   PumpFlag1 = 1;
 }
 
 void PUMPStop(void)
 {
-  HAL_GPIO_WritePin(GPIOD, JDQ4_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOE, JDQ4_Pin, GPIO_PIN_SET);
   PumpFlag1 = 0;
 }
 
 void WHPStart(void)
 {
- HAL_GPIO_WritePin(GPIOD,JDQ3_Pin|JDQ2_Pin|JDQ1_Pin, GPIO_PIN_RESET);}
+ HAL_GPIO_WritePin(GPIOE,JDQ3_Pin|JDQ2_Pin|JDQ1_Pin, GPIO_PIN_RESET);}
 
 void WHPStop(void)
 {
-  HAL_GPIO_WritePin(GPIOD,JDQ3_Pin|JDQ2_Pin|JDQ1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOE,JDQ3_Pin|JDQ2_Pin|JDQ1_Pin, GPIO_PIN_SET);
 }
 
 void FANStart(void)
@@ -325,16 +331,30 @@ void FANStop(void)
 void WHPInit(void)
 {
   WHPStop();
-  osDelay(100);
+  osDelay(1000);
   WHPStart();
   osDelay(300);
- // SetVolume(0x02,0x01);
-  MCPWriteData(0x5e,0x00,0x01);
+  // SetVolume(0x02,0x01);
+  MCPWriteData(Zone1ADDR,0x00,0x01);
+  MCPWriteData(Zone1ADDR,0x00,0x01);
+  MCPWriteData(Zone1ADDR,0x00,0x01);
+  
+  //  MCPWriteData(Zone2ADDR,0x00,0x01);
+  
   osDelay(500);
- // SetVolume(0x02,0x80);
-  MCPWriteData(0x5e,0x00,0x80);
+  // SetVolume(0x02,0x80);
+  MCPWriteData(Zone1ADDR,0x00,0x80);
+  MCPWriteData(Zone1ADDR,0x00,0x80);
+  MCPWriteData(Zone1ADDR,0x00,0x80);
+  
+  // MCPWriteData(Zone2ADDR,0x00,0x80);
+  
   osDelay(500);
-  MCPWriteData(0x5e,0x00,0x01);
+  MCPWriteData(Zone1ADDR,0x00,0x01);
+  MCPWriteData(Zone1ADDR,0x00,0x01);
+  MCPWriteData(Zone1ADDR,0x00,0x01);
+  
+//  MCPWriteData(Zone2ADDR,0x00,0x01);
   //  SetVolume(0x02,0x01);
 
 }
@@ -601,6 +621,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 //    key_scan();
 //    Knob_covered_Votage();
     WL_scan();
+    TimUart();
   }
   /* USER CODE END Callback 1 */
 }

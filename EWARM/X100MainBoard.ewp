@@ -1115,19 +1115,10 @@
             <name>$PROJ_DIR$\..\BSP\FlashEEPROM.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\BSP\KNOB.c</name>
+            <name>$PROJ_DIR$\..\BSP\GY25.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\BSP\mcp4541.c</name>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\BSP\mpu6050.c</name>
-            <excluded>
-                <configuration>X100MainBoard</configuration>
-            </excluded>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\BSP\oledfont.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\BSP\WaterLevel.c</name>
