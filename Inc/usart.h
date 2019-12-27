@@ -53,6 +53,7 @@ HAL_StatusTypeDef Serial_PutByte(UART_HandleTypeDef *huart,uint8_t param );
 void Serial_PutString(UART_HandleTypeDef *huart,uint8_t *p_string,uint8_t len);
 void TimUart(void);
 void usart2_sevice(void);
+extern void machine_date_update(void);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

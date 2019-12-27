@@ -298,6 +298,7 @@ void USART1_IRQHandler(void)
       temp = __HAL_DMA_GET_COUNTER(&hdma_usart1_rx);
       RxLen = 10 - temp;
       RxEndFlag = 1;
+      osSemaphoreRelease(Uart1_Semaph);
       HAL_UART_DMAResume(&huart1);
     }
   }

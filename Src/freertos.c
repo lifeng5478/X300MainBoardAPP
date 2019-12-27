@@ -74,6 +74,8 @@ float temper;
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
+osSemaphoreId Uart1_Semaph;
+  osSemaphoreDef(Uart1_Semaph);
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -123,6 +125,8 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
+
+  Uart1_Semaph = osSemaphoreCreate(osSemaphore(Uart1_Semaph),1);
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
@@ -290,9 +294,10 @@ void ReadTemper(void const * argument)
    MCP4541Sevice();
 
  //           osDelay(1);
+   machine_date_update();
+Serial_PutString(&huart1,MachineSTATUS,13);
 
-
-    osDelay(200);
+    osDelay(50);
   }
   /* USER CODE END ReadTemper */
 }
@@ -312,8 +317,12 @@ void MenuFunc(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+//    osDelay(1);
+//    
+    osSemaphoreWait(Uart1_Semaph,osWaitForever);
     USART1_Sevice1();
+  //  HAL_GPIO_TogglePin(GPIOE,LED2_Pin);
+   // osDelay(1000);
   }
   /* USER CODE END MenuFunc */
 }
@@ -337,6 +346,7 @@ void ReadMPU6050(void const * argument)
   {
 
     timeer1++;
+    
     if(timeer1>=50)
     {
       timeer1=0;

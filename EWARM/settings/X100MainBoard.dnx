@@ -20,7 +20,7 @@
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
     </StLinkDriver>
     <DebugChecksum>
-        <Checksum>3277239455</Checksum>
+        <Checksum>483243551</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -193,8 +193,7 @@
         <Count>0</Count>
     </Breakpoints2>
     <Aliases>
-        <A0>_ "F:\K42MainBoardAPP\Src\tim.c" ""</A0>
-        <Count>1</Count>
+        <Count>0</Count>
         <SuppressDialog>0</SuppressDialog>
     </Aliases>
 </settings>

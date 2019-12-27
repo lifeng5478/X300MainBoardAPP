@@ -95,6 +95,7 @@ void WL_scan(void)
         WaterFlag=2;
         FlagAll=1;
         SendWL2ON();
+        Machine_status_strc.water2 = 0x00;
        HAL_GPIO_WritePin(GPIOE,LED2_Pin,GPIO_PIN_SET);
       }
     }
@@ -111,6 +112,7 @@ void WL_scan(void)
       ucWLLockIn2=1;
       WaterFlag=1;
       SendWL2OFF();
+      Machine_status_strc.water2 = 0x01;
      HAL_GPIO_WritePin(GPIOE,LED2_Pin,GPIO_PIN_RESET);
     }
   }
@@ -128,6 +130,7 @@ void WL_scan(void)
         ucWLLockOut1=1;
         WaterFlag1=2;
         SendWL1ON();
+        Machine_status_strc.water1 = 0x00;
        HAL_GPIO_WritePin(GPIOE,LED3_Pin,GPIO_PIN_SET);
 
       }
@@ -145,6 +148,7 @@ void WL_scan(void)
       ucWLLockIn1=1;
       WaterFlag1=1;
       SendWL1OFF();
+      Machine_status_strc.water1 = 0x01;
     HAL_GPIO_WritePin(GPIOE,LED3_Pin,GPIO_PIN_RESET);
 //
     }
@@ -160,7 +164,7 @@ void WLSevice(void)
 
 static uint16_t time1;
 static uint16_t time2;
-static uint16_t time3;
+//static uint16_t time3;
 if(STFlag == 0)
 {
   if (FlagAll==1)
@@ -169,8 +173,8 @@ if(STFlag == 0)
     if(PumpFlag1 == 1)
     {
       PumpOFF;
+      Machine_status_strc.pumpstatus = 0x00;
       PumpFlag1 =0;
-
     }
     
     if(WaterFlag == 1)
@@ -185,19 +189,28 @@ if(STFlag == 0)
       {
         time2=0;
         PumpON;
+        Machine_status_strc.pumpstatus = 0x01;
         PumpFlag =1;
         //WaterFlag = 0;
       }
     }
     if(PumpFlag ==1)
     {
-      time3++;
-      if(time3>10000)
+//      time3++;
+//      if(time3>10000)
+//      {
+//        time3 = 0;
+//        time2 = 0;
+//        PumpFlag=0;
+//        PumpOFF;
+//        Machine_status_strc.pumpstatus = 0x00;
+//      }
+      if(WaterFlag == 2)                              //方案二：加注水以上水位为基准
       {
-        time3 = 0;
         time2 = 0;
         PumpFlag=0;
         PumpOFF;
+        Machine_status_strc.pumpstatus = 0x00;
       }
     }
   }

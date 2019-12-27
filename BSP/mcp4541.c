@@ -205,6 +205,7 @@ void MCP4541Sevice(void)
     MCPWriteData(Zone1ADDR,0x00,100-FlashRemember[3]);
     MCPWriteData(Zone1ADDR,0x00,100-FlashRemember[3]);
     MCPWriteData(Zone1ADDR,0x00,100-FlashRemember[3]);
+     // Machine_status_strc.whpstatus = FlashRemember[3];
     //printf("Flash3µÄÖµÎª%d",FlashRemember[3]);
     tempmcp1=FlashRemember[3];
   }
@@ -221,7 +222,6 @@ void MCP4541Sevice(void)
   {
     MCPWriteData(Zone1ADDR,0x00,100-FlashRemember[2]);
     MCPWriteData(Zone1ADDR,0x00,100-FlashRemember[2]);
-
     tempmcp3=FlashRemember[2];
   }
 }

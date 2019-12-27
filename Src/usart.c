@@ -28,6 +28,28 @@ uint8_t RxMFlag = 0;
 
 uint8_t ReceiveBuffer2[20]={0};
 uint8_t bufcount = 0;
+
+
+//串口协议编制
+/*
+起始	地址	连接状态	水泵状态	雾化片JDQ	风扇FF状态	风扇MF状态	雾化片状态	水位传感器1状态	水位传感器2状态	结束
+Byte1-2	Byte3-4	Byte5	        Byte6	        Byte7	        Byte8	        Byte9	        Byte10	        Byte11	        Byte12	        Byte13
+uint8_t MashineSTATUS = {1,2,3,4,5,6,7,8,9,10,11,12,13};
+起始设置 0x5A 0xA5
+地址默认设置为：0x80
+连接状态默认为:0x00
+水泵状态默认为:0x00
+雾化片JDQ默认为:0x00
+风扇FF状态默认为:0x00
+风扇MF状态默认为:0x00
+雾化片状态默认为:0x00
+水位传感器1状态默认为:0x00
+水位传感器2状态默认为:0x00
+结束位默认为0xA5
+*/
+
+uint8_t MachineSTATUS[13]={0x5A,0xA5,0x00,0x80,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xA5};
+machine_strcut Machine_status_strc = {0,0,0,0,0,0,0,0}; 
 /* USER CODE END 0 */ 
 
 UART_HandleTypeDef huart1;
@@ -312,6 +334,43 @@ void usart2_sevice(void)
     }
     memset (ReceiveBuffer2,0,sizeof(ReceiveBuffer2));
     bufcount = 0;
+  }
+}
+
+
+void machine_date_update(void)
+{
+  if (Machine_status_strc.connect!=MachineSTATUS[4])
+  {
+   MachineSTATUS[4] = Machine_status_strc.connect;
+  }
+    if (Machine_status_strc.pumpstatus!=MachineSTATUS[5])
+  {
+    MachineSTATUS[5] = Machine_status_strc.pumpstatus;
+  }
+    if (Machine_status_strc.whppower!=MachineSTATUS[6])
+  {
+    MachineSTATUS[6] = Machine_status_strc.whppower;
+  }
+    if (Machine_status_strc.fansff!=MachineSTATUS[7])
+  {
+    MachineSTATUS[7] = Machine_status_strc.fansff;
+  }
+    if (Machine_status_strc.fansmf!=MachineSTATUS[8])
+  {
+    MachineSTATUS[8] = Machine_status_strc.fansmf;
+  }
+    if (Machine_status_strc.whpstatus!=MachineSTATUS[9])
+  {
+    MachineSTATUS[9] = Machine_status_strc.whpstatus;
+  }
+    if (Machine_status_strc.water1!=MachineSTATUS[10])
+  {
+    MachineSTATUS[10] = Machine_status_strc.water1;
+  }
+    if (Machine_status_strc.water2!=MachineSTATUS[11])
+  {
+    MachineSTATUS[11] = Machine_status_strc.water2;
   }
 }
 

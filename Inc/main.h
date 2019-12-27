@@ -52,7 +52,8 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "cmsis_os.h"
+extern osSemaphoreId Uart1_Semaph;
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -67,7 +68,20 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
+typedef struct{
+  uint8_t connect;
+  uint8_t pumpstatus;
+  uint8_t whppower;
+  uint8_t fansff;
+  uint8_t fansmf;
+  uint8_t whpstatus;
+  uint8_t water1;
+  uint8_t water2;
+}machine_strcut;
 
+extern machine_strcut Machine_status_strc;
+
+extern uint8_t MachineSTATUS[13];
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
