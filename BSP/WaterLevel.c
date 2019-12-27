@@ -79,38 +79,6 @@ void SendWL2OFF(void)
 
 void WL_scan(void)
 {
-	
-//  if(GetWL1_H)
-//  {
-//        ucWLLock1=0; 
-//        uiWLTimeCnt1=0;
-//  }
-//  else if(ucWLLock1==0)
-//  {
-//     uiWLTimeCnt1++;
-//     if(uiWLTimeCnt1>const_WL_time)
-//     {
-//        uiWLTimeCnt1=0; 
-//        ucWLLock1=1; 
-//        ucWLSec=1;
-//     }
-//  }
-//
-//  if(GetWL2_H)
-//  {
-//        ucWLLock2=0; 
-//        uiWLTimeCnt2=0;
-//  }
-//  else if(ucWLLock2==0)
-//  {
-//     uiWLTimeCnt2++; 
-//     if(uiWLTimeCnt2>const_WL_time)
-//     {
-//        uiWLTimeCnt2=0;
-//        ucWLLock2=1; 
-//        ucWLSec=2;
-//     }
-//  }
   
   if(GetWL2_H)				//双向抗抖程序
   {
@@ -187,93 +155,7 @@ void WL_scan(void)
 
 void WLSevice(void)
 {
-//	 switch(ucWLSec)
-//	 {
-//		 case 1:
-//		 ucWLSec=0;
-//		 break;
-//	   case 2:
-//                  ucWLSec=0;
-//		   break;
-//	 }
 
-//  switch(WaterFlag)
-//  {
-//  case 1:
-//    WaterFlag=0;
-//    HAL_GPIO_WritePin(GPIOD,JDQ4_Pin, GPIO_PIN_RESET);
-//    break;
-////  case 2:
-////    WaterFlag=0;
-////    HAL_GPIO_WritePin(GPIOD,JDQ4_Pin, GPIO_PIN_SET);
-////    break;
-//    case 3:
-//    WaterFlag=0;
-//    HAL_GPIO_WritePin(GPIOD,JDQ4_Pin, GPIO_PIN_SET);
-//    break;
-//    
-//  }
-  
-//  	 if(GetWL1_L)
-//	 {
-//
-//		  HAL_GPIO_WritePin(GPIOD,JDQ4_Pin, GPIO_PIN_SET);
-//	 }
-//	 if(GetWL1_H)
-//	 {
-//
-//		 HAL_GPIO_WritePin(GPIOD,JDQ4_Pin, GPIO_PIN_RESET);
-//	 }
-//         
-//           
-//  	 if(GetWL2_L)
-//	 {
-//
-//		  HAL_GPIO_WritePin(GPIOD,JDQ3_Pin, GPIO_PIN_SET);
-//	 }
-//	 if(GetWL2_H)
-//	 {
-//
-//		 HAL_GPIO_WritePin(GPIOD,JDQ3_Pin, GPIO_PIN_RESET);
-//	 }
-  /*
-WaterFlag1 = 1 无水
-WaterFlag1 = 2 有水
-
-GPIO_PIN_SET 关
-GPIO_PIN_RESET 开
-
-*/
-//static uint16_t time1;
-//if(FlagAll == 1)
-//{
-//    if(WaterFlag1 == 1)
-//  {
-//    if(WaterFlag!=3)
-//    {
-//    PumpON
-//    time1++;
-//    if(time1>ShutDownTime)
-//    {
-//      time1=0;
-//      WaterFlag1=0;
-//      FlagAll = 0;
-//      PumpOFF
-//    }
-//    }
-//  }
-//  if (WaterFlag1 == 2)
-//  {
-//    time1 = 0;
-//  }
-//  
-//    if(WaterFlag == 2||WaterFlag==3)
-//  {
-//    PumpOFF
-//    WaterFlag=0;
-//  }
-//
-//}
   
 
 static uint16_t time1;
@@ -283,35 +165,6 @@ if(STFlag == 0)
 {
   if (FlagAll==1)
   {
-//    if(WaterFlag == 1)
-//    {
-//      time1++;
-//      if(time1>1000)
-//      {
-//        time1=0;
-//        time2++;
-//      }
-//      if(time2>120)
-//      {
-//        time2=0;
-//        PumpON
-//        WaterFlag = 0;
-//      }
-//    }
-//
-//    if(WaterFlag==2)
-//    {
-//      time1=0;
-//      time2=0;
-//      PumpOFF
-//      WaterFlag=0;
-//    }
-//    
-//    if(WaterFlag1 == 1)
-//    {
-//      FlagAll=0;
-//      WaterFlag1 = 0;
-//    }
 
     if(PumpFlag1 == 1)
     {

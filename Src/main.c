@@ -245,31 +245,11 @@ void InitAllPeriph(void)
     /* Starting Error */
     Error_Handler();
   }
-//   printf("TIM1 Key扫描开始！\n"); 
-//  printf("JDQ初始化完成！\n"); 
-//  FFSTART_EN_DISABLE();
-//  MFSTART_EN_DISABLE();
-  HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);		//风扇3
-//  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);		//风扇
   HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_3);
-//  printf("PWM初始化完成！\n"); 
-   // MPU6050_Init();  
-//    printf("MPU6050初始化完成!\n");
- //STMFLASH_Write(0, (uint16_t*)FlashRemember, sizeof(FlashRemember));
   STMFLASH_Read(0, (uint16_t*)FlashRemember, sizeof(FlashRemember));
-//  for(i=0;i<sizeof(FlashRemember);i++)
-//  {
-//    printf("Flash预存%d：%d\n",i,FlashRemember[i]);
-//  }
-  
-//  HAL_UART_Transmit(&huart1 , SpeedToSend, 9 , 0xffff);
   __HAL_UART_ENABLE_IT(&huart1,UART_IT_IDLE);
- // HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_4);
-        
-//        HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);		//风扇3
-//        HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_2);
-//        HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_3);
-//        HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_4);
+
 }
 
 
@@ -359,134 +339,6 @@ void WHPInit(void)
 
 }
 
-//void SendMashineComond(uint8_t *x)
-//{
-//	 HAL_UART_Transmit(&huart1 , x, 9 , 0xffff);
-//}
-//
-//void HAL_UART_RxCpltCallback(UART_HandleTypeDef*UartHandle) 
-//{
-////  uint8_t i;
-//  //    BaseType_t xHigherPriorityTaskWoken;
-//  //   xHigherPriorityTaskWoken = pdFALSE;
-//  if(UartHandle->Instance == USART1)  
-//  {
-//
-//    HAL_UART_Receive_IT(&huart1,IRReceive,sizeof(IRReceive));
-//    HAL_UART_Transmit(&huart1 , IRReceive, 9 , 0xffff);
-////    for(i=0;i<sizeof(IRReceive);i++)
-////    {
-////      //printf("收到的数据为%d：%c\n",i,IRReceive[i]);
-////      	 
-////    }
-//    if(IRReceive[0]==0x5A&&IRReceive[1]==0xA5)
-//    {
-//      if(IRReceive[4]==0x10&&IRReceive[5]==0x01)
-//      {
-//          UartReciveFlag=2;
-//      }
-//      else if(IRReceive[4]==0x10&&IRReceive[5]==0x02)
-//      {
-//          UartReciveFlag=1;
-//      }
-//      
-//      else if(IRReceive[4]==0x10&&IRReceive[5]==0x03)
-//      {
-//           if(IRReceive[8]==0x01)
-//           {
-//              FFSTART_EN_ENABLE();
-//              MFSTART_EN_ENABLE();
-//           }
-//           if(IRReceive[8]==0x00)
-//           {
-//              FFSTART_EN_DISABLE();
-//              MFSTART_EN_DISABLE();
-//           }
-//      }
-//      
-//      else if(IRReceive[4]==0x10&&IRReceive[5]==0x04)
-//      {
-//           if(IRReceive[8]==0x01)
-//           {
-//            WHPStart();
-//           }
-//           if(IRReceive[8]==0x00)
-//           {
-//            WHPStop();
-//           }
-//      }
-//      
-//      else if(IRReceive[4]==0x10&&IRReceive[5]==0x05)
-//      {
-//           if(IRReceive[8]==0x01)
-//           {
-//            PumpON
-//           }
-//           if(IRReceive[8]==0x00)
-//           {
-//            PumpOFF
-//           }
-//      }
-//      else if(IRReceive[4]==0x11&&IRReceive[5]==0x01)
-//      {
-//        TIM4->CCR1=IRReceive[7]*10;
-//        FlashRemember[0] = IRReceive[7];
-//      }
-//      else if(IRReceive[4]==0x11&&IRReceive[5]==0x02)
-//      {
-//        TIM4->CCR3=IRReceive[7]*10;
-//        FlashRemember[1] = IRReceive[7];
-//      }
-//      
-//      else if(IRReceive[4]==0x11&&IRReceive[5]==0x03)
-//      {
-//        FlashRemember[3] = IRReceive[7];
-//      }
-//      
-//      else if(IRReceive[4]==0x11&&IRReceive[5]==0x04)
-//      {
-//        FlashRemember[4] = IRReceive[7];
-//      }
-//      
-//      else if(IRReceive[4]==0x11&&IRReceive[5]==0x05)
-//      {
-//        FlashRemember[2] = IRReceive[7];
-//      }
-//
-//
-//    HAL_UART_Receive_IT(&huart1,IRReceive,sizeof(IRReceive));
-//
-//  }
-//     memset(IRReceive,0,sizeof(IRReceive));
-//}
-//}
-
-
-//void HAL_UART_RxCpltCallback(UART_HandleTypeDef*UartHandle) 
-//{
-//  uint8_t temp;
-//  if (UartHandle->Instance == USART1)
-//  {
-//    if(__HAL_UART_GET_FLAG(UartHandle,UART_FLAG_IDLE)!= RESET)
-//    {
-//      __HAL_UART_CLEAR_IDLEFLAG(UartHandle);
-//      HAL_UART_DMAStop(UartHandle);
-//      temp = __HAL_DMA_GET_COUNTER(&hdma_usart1_rx);
-//      RxLen = BUFFERSIZE - temp;
-//      UartReciveFlag = 1;
-//      HAL_UART_DMAResume(UartHandle);
-//    }
-//  }
-//}
-
-// void HAL_UART_ErrorCallback(UART_HandleTypeDef*UartHandle)
-// {
-//      if(UartHandle->Instance == USART1)  
-//  {
-//      MX_USART1_UART_Init();
-//      HAL_UART_Receive_IT(&huart1,IRReceive,sizeof(IRReceive));
-//  }
-// }
 uint8_t everyFlag = 0;
 
 void USART1_Sevice1(void)
